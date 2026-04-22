@@ -1,0 +1,43 @@
+body {
+  background-color: #E0E0DB;
+}
+
+.container {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 36px;
+  margin-top: 16px;
+}
+
+.menu {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.logo {
+  height: 40px;
+}
+
+.intro {
+  display: flex;
+  gap: 64px;
+}
+
+.intro p {
+  font-size: 72px;
+}
+
+.intro img {
+  width: 600px;
+  object-fit: cover;
+}
+
+.description img {
+  width: 50px;
+}
