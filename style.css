@@ -1,17 +1,54 @@
+/* =========================================================
+   VARIABLES : on définit nos couleurs/valeurs une seule fois.
+   Pour changer le thème du site, il suffit de modifier ici.
+   On les utilise ensuite avec var(--nom).
+   ========================================================= */
+:root {
+  --bg: #E0E0DB;
+  --text: #2f3640;
+  --accent: #40739e;
+  --accent-dark: #273c75;
+  --white: #ffffff;
+  --border: #dcdde1;
+  --max-width: 1200px;
+}
+
+/* Reset léger : box-sizing évite les surprises de tailles
+   (le padding ne s'ajoute plus à la largeur des éléments) */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 body {
-  background-color: #E0E0DB;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.6;
 }
 
 .container {
   width: 90%;
+  max-width: var(--max-width); /* le site ne s'étire pas à l'infini sur grand écran */
   margin: 0 auto;
 }
 
+/* =========================================================
+   HEADER
+   ========================================================= */
 .header {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 36px;
-  margin-top: 16px;
+  align-items: center;
+  flex-wrap: wrap;            /* permet aux éléments de passer à la ligne si manque de place */
+  gap: 16px;
+  margin: 24px 0 48px;
+}
+
+.header h1 {
+  font-size: 1.8rem;
+  letter-spacing: 0.5px;
 }
 
 .menu {
@@ -20,72 +57,169 @@ body {
   gap: 24px;
 }
 
-.logo {
-  height: 40px;
+.menu h2 {
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.2s;
 }
 
+.menu h2:hover {
+  color: var(--accent);
+}
+
+.logo {
+  height: 32px;
+  transition: transform 0.2s;
+}
+
+.logo:hover {
+  transform: scale(1.1);     /* petit effet au survol */
+}
+
+/* =========================================================
+   INTRO (photo + texte de présentation)
+   ========================================================= */
 .intro {
   display: flex;
-  gap: 64px;
+  gap: 48px;
+  align-items: center;
 }
 
-.intro p {
-  font-size: 72px;
-}
-
-.intro img {
-  width: 600px;
+.intro > img {
+  width: 50%;                /* l'image prend la moitié, plus souple que 600px fixes */
+  max-width: 600px;
+  height: auto;
+  border-radius: 8px;        /* coins légèrement arrondis, plus moderne */
   object-fit: cover;
 }
 
-.description img {
-  width: 50px;
+.description {
+  flex: 1;                   /* le texte occupe l'espace restant */
 }
 
+/* clamp(min, idéal, max) : la taille s'adapte à l'écran
+   tout en restant entre 32px et 64px. Fini le débordement ! */
+.description h2 {
+  font-size: clamp(2rem, 5vw, 4rem);
+  line-height: 1.15;
+  margin-bottom: 24px;
+}
+
+.description p {
+  font-size: 1.1rem;
+  max-width: 50ch;           /* largeur de lecture confortable */
+  margin-bottom: 24px;
+}
+
+.description img {
+  width: 40px;
+  opacity: 0.7;
+}
+
+/* =========================================================
+   FORMULAIRE DE CONTACT
+   ========================================================= */
 .form {
   display: flex;
   justify-content: center;
-  margin-top: 32px;
+  margin: 80px 0;
 }
 
 .contact-form {
   display: flex;
   flex-direction: column;
-  background-color: white;
-  padding: 2rem;
-  border-radius: 10px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  background-color: var(--white);
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   width: 100%;
-  max-width: 800px;
+  max-width: 700px;
 }
 
 .contact-form label {
   margin-top: 1rem;
   font-weight: bold;
-  color: #2f3640;
+  color: var(--text);
 }
 
 .contact-form input,
 .contact-form textarea {
   margin-top: 0.5rem;
   padding: 0.8rem;
-  border: 1px solid #dcdde1;
-  border-radius: 5px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
   font-size: 1rem;
+  font-family: inherit;      /* le textarea hérite de la police du site */
+  transition: border-color 0.2s;
+}
+
+/* :focus = quand on clique dans le champ. On met l'accent en valeur */
+.contact-form input:focus,
+.contact-form textarea:focus {
+  outline: none;
+  border-color: var(--accent);
 }
 
 .contact-form button {
   margin-top: 1.5rem;
-  padding: 0.8rem;
+  padding: 0.9rem;
   border: none;
-  background-color: #40739e;
-  color: white;
+  background-color: var(--accent);
+  color: var(--white);
   font-size: 1rem;
-  border-radius: 5px;
+  font-weight: bold;
+  border-radius: 6px;
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
 .contact-form button:hover {
-  background-color: #273c75;
+  background-color: var(--accent-dark);
+}
+
+/* =========================================================
+   RESPONSIVE
+   Une media query applique des règles SEULEMENT en dessous
+   d'une certaine largeur d'écran (ici 768px = tablette/mobile).
+   ========================================================= */
+@media (max-width: 768px) {
+  /* L'intro passe en colonne : image au-dessus, texte en dessous */
+  .intro {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .intro > img {
+    width: 100%;             /* l'image prend toute la largeur */
+  }
+
+  .description {
+    text-align: center;
+  }
+
+  .description p {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .form {
+    margin: 48px 0;
+  }
+
+  .contact-form {
+    padding: 1.5rem;
+  }
+}
+
+/* Petits écrans (téléphones) : on resserre encore le header */
+@media (max-width: 480px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .menu {
+    gap: 16px;
+  }
 }
